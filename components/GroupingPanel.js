@@ -1,4 +1,3 @@
-// GroupingPanel.js
 import React, { useState } from 'react';
 import { Drawer, List, ListItem, ListItemText, Divider, TextField, Button, Typography } from '@mui/material';
 
