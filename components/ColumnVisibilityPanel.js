@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, Switch, Button } from '@mui/material';
+import { Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, Switch, Button, Divider } from '@mui/material';
 
 const ColumnVisibilityPanel = ({ headers, visibleColumns, toggleColumnVisibility, open, onClose, onShowAllColumns, onApply }) => {
     return (
@@ -15,11 +15,13 @@ const ColumnVisibilityPanel = ({ headers, visibleColumns, toggleColumnVisibility
                                     onChange={() => toggleColumnVisibility(index)}
                                     checked={visibleColumns[index]}
                                 />
+                                                            <Divider />
+
                             </ListItemSecondaryAction>
                         </ListItem>
                     ))}
                 </List>
-                <div style={{ display: 'flex', justifyContent: '', padding: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
                     <Button variant="text" color="inherit" onClick={onShowAllColumns}>
                         Show all columns
                     </Button>

@@ -11,6 +11,8 @@ import ColumnVisibilityPanel from './ColumnVisibilityPanel';
 import Sorting from './Sorting';
 import jsonData from "../data/data";
 import GroupingPanel from './GroupingPanel';
+import FilterPanel from './FilterPanel';
+
 
 const DataTable = () => {
     const headers = Object.keys(jsonData[0]);
@@ -23,28 +25,71 @@ const DataTable = () => {
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
     const [showGroupingPanel, setShowGroupingPanel] = useState(false);
-    const [groupedHeaders, setGroupedHeaders] = useState([]);
+    const [groupedData, setGroupedData] = useState([]);
+const [groupedHeaders, setGroupedHeaders] = useState([]);
+
 
     const indexOfLastRow = page * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = jsonData.slice(indexOfFirstRow, indexOfLastRow);
 
-    // Grouping function
+    const categories = ['Category A', 'Category B', 'Category C'];
+    const subcategories = ['Subcategory 1', 'Subcategory 2', 'Subcategory 3'];
+
+    // const categories = Array.from(new Set(jsonData.map(item => item.category)));
+    // const subcategories = Array.from(new Set(jsonData.map(item => item.subcategory)));
+    // const categories = [...new Set(jsonData.map(item => item.category))];
+    // const subcategories = [...new Set(jsonData.map(item => item.subcategory))];
+
+    
+    const getGroupedData = (data, groupedHeaders) => {
+        if (!groupedHeaders || groupedHeaders.length === 0) {
+            return data;
+        }
+        const groupedData = data.reduce((groups, row) => {
+            const groupKey = groupedHeaders.map(header => row[header]).join('-');
+            if (!groups[groupKey]) {
+                groups[groupKey] = {
+                    key: groupKey,
+                    rows: [],
+                    headers: groupedHeaders.map(header => row[header])
+                };
+            }
+            groups[groupKey].rows.push(row);
+
+            return groups;
+        }, {});
+        const groupedDataArray = Object.values(groupedData);
+
+        return groupedDataArray;
+    };
+
+
+    const [showFilterPanel, setShowFilterPanel] = useState(false);
+    const [appliedFilters, setAppliedFilters] = useState({
+        categories: [],
+        subcategories: [],
+        priceRange: [0, 1000],
+        dateRange: [new Date(2022, 0, 1), new Date()]
+    });
+
+    const handleApplyFilter = (filters) => {
+        setAppliedFilters(filters);
+        setShowFilterPanel(false);
+    };
     const handleApplyGrouping = (groupedHeaders) => {
         setGroupedHeaders(groupedHeaders);
         setShowGroupingPanel(false);
     };
 
-    // Grouped data selector
-    const getGroupedData = () => {
-        // Your logic to group data based on 'groupedHeaders'
-        // Return the grouped data
-    };
-
-    // Effect to apply grouping on data change
     useEffect(() => {
-        const groupedData = getGroupedData();
-        // Handle grouped data as per your requirement
+    }, [jsonData, groupedHeaders, appliedFilters]);
+
+
+
+
+    useEffect(() => {
+        const groupedData = getGroupedData()
     }, [jsonData, groupedHeaders]);
 
     const sortData = (data, column, direction) => {
@@ -118,7 +163,7 @@ const DataTable = () => {
                     <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                         <VisibilityIcon style={{ marginRight: 10 }} onClick={() => setShowColumnPanel(!showColumnPanel)} />
                         <SwapVertIcon style={{ marginRight: 10 }} onClick={() => setShowSortingPanel(!showSortingPanel)} />
-                        <FilterListIcon style={{ marginRight: 10 }} />
+                        <FilterListIcon onClick={() => setShowFilterPanel(true)} />
                         <LayersIcon onClick={() => setShowGroupingPanel(!showGroupingPanel)} />
                     </div>
                 </div>
@@ -158,6 +203,13 @@ const DataTable = () => {
                     onChange={handleChangePage}
                     shape="rounded"
                     variant="outlined"
+                />
+                <FilterPanel
+                    open={showFilterPanel}
+                    onClose={() => setShowFilterPanel(false)}
+                    categories={categories}
+                    subcategories={subcategories}
+                    onApplyFilter={handleApplyFilter}
                 />
             </Paper>
             {showSortingPanel && (

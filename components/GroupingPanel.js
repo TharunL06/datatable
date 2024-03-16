@@ -22,15 +22,19 @@ const GroupingPanel = ({ headers, open, onClose, onClearGrouping, onApplyGroupin
         onApplyGrouping(selectedHeaders);
     };
 
+    // Filter out headers to display only category and subcategory
+    const filteredHeaders = headers.filter(header => header === 'category' || header === 'subcategory');
+
     return (
         <Drawer anchor="right" open={open} onClose={onClose}>
             <div style={{ width: 450, padding: '20px' }}>
                 <List>
-                <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '20px' }}>Create Groups</Typography>
+                    <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '20px' }}>Create Groups</Typography>
                     <Divider />
                     {selectedHeaders.map((header, index) => (
                         <ListItem key={index}>
                             <ListItemText primary={header} />
+                            <Divider />
                             <Button size="small" onClick={() => handleRemoveGrouping(header)}>Remove</Button>
                         </ListItem>
                     ))}
@@ -57,7 +61,7 @@ const GroupingPanel = ({ headers, open, onClose, onClearGrouping, onApplyGroupin
                         style: { backgroundColor: '#f5f5f5', marginBottom: 10 }
                     }}
                 >
-                    {headers.map((header, index) => (
+                    {filteredHeaders.map((header, index) => (
                         <option key={index} value={header}>
                             {header}
                         </option>
