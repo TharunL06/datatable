@@ -984,7 +984,27 @@ const jsonData = [
       "updatedAt": "2016-02-11T17:34:36.494+05:30",
       "price": 60.99,
       "sale_price": 48.95
-  }
+  },
+//   {
+//     "id": 101,
+//     "name": "Fitness Attachment",
+//     "category": "Activity",
+//     "subcategory": "Fitness",
+//     "createdAt": "2016-02-11T17:34:36.494+05:30",
+//     "updatedAt": "2016-02-11T17:34:36.494+05:30",
+//     "price": 60.99,
+//     "sale_price": 48.95
+// },
+// {
+//     "id": 102,
+//     "name": "Fitness Attachment",
+//     "category": "Activity",
+//     "subcategory": "Fitness",
+//     "createdAt": "2016-02-11T17:34:36.494+05:30",
+//     "updatedAt": "2016-02-11T17:34:36.494+05:30",
+//     "price": 60.99,
+//     "sale_price": 48.95
+// }
 ]
 
 
