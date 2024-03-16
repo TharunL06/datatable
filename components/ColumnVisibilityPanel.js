@@ -4,7 +4,7 @@ import { Drawer, List, ListItem, ListItemText, ListItemSecondaryAction, Switch, 
 const ColumnVisibilityPanel = ({ headers, visibleColumns, toggleColumnVisibility, open, onClose, onShowAllColumns, onApply }) => {
     return (
         <Drawer anchor="right" open={open} onClose={onClose}>
-            <div style={{ width: 450 }}>
+            <div style={{ width: 450, padding: '20px' }}>
                 <List>
                     {headers.map((header, index) => (
                         <ListItem key={index}>
@@ -19,7 +19,7 @@ const ColumnVisibilityPanel = ({ headers, visibleColumns, toggleColumnVisibility
                         </ListItem>
                     ))}
                 </List>
-                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                <div style={{ display: 'flex', justifyContent: '', padding: '10px' }}>
                     <Button variant="text" color="inherit" onClick={onShowAllColumns}>
                         Show all columns
                     </Button>

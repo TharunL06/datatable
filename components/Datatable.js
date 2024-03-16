@@ -10,6 +10,7 @@ import SearchBar from './Searchbar';
 import ColumnVisibilityPanel from './ColumnVisibilityPanel';
 import Sorting from './Sorting';
 import jsonData from "../data/data";
+import GroupingPanel from './GroupingPanel';
 
 const DataTable = () => {
     const headers = Object.keys(jsonData[0]);
@@ -21,10 +22,30 @@ const DataTable = () => {
     const [showSortingPanel, setShowSortingPanel] = useState(false);
     const [sortColumn, setSortColumn] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
+    const [showGroupingPanel, setShowGroupingPanel] = useState(false);
+    const [groupedHeaders, setGroupedHeaders] = useState([]);
 
     const indexOfLastRow = page * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = jsonData.slice(indexOfFirstRow, indexOfLastRow);
+
+    // Grouping function
+    const handleApplyGrouping = (groupedHeaders) => {
+        setGroupedHeaders(groupedHeaders);
+        setShowGroupingPanel(false);
+    };
+
+    // Grouped data selector
+    const getGroupedData = () => {
+        // Your logic to group data based on 'groupedHeaders'
+        // Return the grouped data
+    };
+
+    // Effect to apply grouping on data change
+    useEffect(() => {
+        const groupedData = getGroupedData();
+        // Handle grouped data as per your requirement
+    }, [jsonData, groupedHeaders]);
 
     const sortData = (data, column, direction) => {
         return data.sort((a, b) => {
@@ -98,7 +119,7 @@ const DataTable = () => {
                         <VisibilityIcon style={{ marginRight: 10 }} onClick={() => setShowColumnPanel(!showColumnPanel)} />
                         <SwapVertIcon style={{ marginRight: 10 }} onClick={() => setShowSortingPanel(!showSortingPanel)} />
                         <FilterListIcon style={{ marginRight: 10 }} />
-                        <LayersIcon />
+                        <LayersIcon onClick={() => setShowGroupingPanel(!showGroupingPanel)} />
                     </div>
                 </div>
 
@@ -154,6 +175,12 @@ const DataTable = () => {
                 onClose={() => setShowColumnPanel(false)}
                 onShowAllColumns={handleShowAllColumns}
                 onApply={handleApply}
+            />
+            <GroupingPanel
+                headers={headers}
+                open={showGroupingPanel}
+                onClose={() => setShowGroupingPanel(false)}
+                onApplyGrouping={handleApplyGrouping}
             />
         </div>
     );

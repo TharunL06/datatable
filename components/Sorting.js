@@ -4,9 +4,9 @@ import { List, ListItem, ListItemText, Divider, Button, Drawer, Typography } fro
 import { ArrowUpward, ArrowDownward } from '@mui/icons-material';
 
 
-const SortingPanel = ({ headers, onSort, onClearSort, sortColumn, sortDirection }) => {
+const SortingPanel = ({ headers, onSort, onClearSort, sortColumn, sortDirection, onClose }) => {
     return (
-        <Drawer anchor="right" open={open}>
+        <Drawer anchor="right" open={open}  onClose={onClose}>
             <div style={{ width: 450, padding: '20px' }}>
                 <Typography variant="h6" style={{ fontWeight: 'bold', marginBottom: '20px' }}>Sorting Options</Typography>
 
