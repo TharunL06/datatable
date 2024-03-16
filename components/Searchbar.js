@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import ClearIcon from '@mui/icons-material/Clear';
+import React from 'react';
+import { TextField } from '@mui/material';
 
-const SearchBar = () => {
-
+const SearchBar = ({ onSearch }) => {
+    const handleSearch = (event) => {
+        const searchTerm = event.target.value;
+        onSearch(searchTerm);
+    };
 
     return (
-        <div>
-
-        </div>
+        <TextField
+            variant="outlined"
+            placeholder="Search..."
+            size="small"
+            shape="rounded"
+            onChange={handleSearch}
+        />
     );
 };
 
