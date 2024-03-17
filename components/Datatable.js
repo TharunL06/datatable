@@ -33,13 +33,13 @@ const [groupedHeaders, setGroupedHeaders] = useState([]);
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = jsonData.slice(indexOfFirstRow, indexOfLastRow);
 
-    const categories = ['Category A', 'Category B', 'Category C'];
-    const subcategories = ['Subcategory 1', 'Subcategory 2', 'Subcategory 3'];
+    // const categories = ['Category A', 'Category B', 'Category C'];
+    // const subcategories = ['Subcategory 1', 'Subcategory 2', 'Subcategory 3'];
 
     // const categories = Array.from(new Set(jsonData.map(item => item.category)));
     // const subcategories = Array.from(new Set(jsonData.map(item => item.subcategory)));
-    // const categories = [...new Set(jsonData.map(item => item.category))];
-    // const subcategories = [...new Set(jsonData.map(item => item.subcategory))];
+    const categories = [...new Set(jsonData.map(item => item.category))];
+    const subcategories = [...new Set(jsonData.map(item => item.subcategory))];
 
     
     const getGroupedData = (data, groupedHeaders) => {

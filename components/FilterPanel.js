@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Slider from '@material-ui/core/Slider';
-import TextField from '@material-ui/core/TextField';
+import Slider from '@mui/material/Slider';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import { DatePicker, MuiPickersUtilsProvider } from '@mui/material';
 import DateFnsUtils from '@date-io/date-fns';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+
 
 
 const getMaxValue = (data, field) => {
@@ -31,6 +32,9 @@ const FilterPanel = ({ data }) => {
 
     // Function to filter data based on the selected filters
     const filterData = () => {
+        if (!data || !Array.isArray(data)) {
+            return []; // Return an empty array if data is undefined or not an array
+        }
         return data.filter(item => {
             // Filter by name
             if (filters.name && !item.name.toLowerCase().includes(filters.name.toLowerCase())) {
@@ -141,27 +145,27 @@ const FilterPanel = ({ data }) => {
                 {/* Render subcategory options */}
             </Select>
 
-            {/* Date picker for createdAt filter */}
+            {/* // Date picker for createdAt filter */}
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                     label="Created At"
                     value={[filters.createdAt.startDate, filters.createdAt.endDate]}
                     onChange={handleCreatedAtChange}
                     format="MM/dd/yyyy"
-                    minDate={new Date(Math.min(...data.map(item => new Date(item.createdAt))))}
-                    maxDate={new Date(Math.max(...data.map(item => new Date(item.createdAt))))}
+                    minDate={data ? new Date(Math.min(...data.map(item => new Date(item.createdAt)))) : null}
+                    maxDate={data ? new Date(Math.max(...data.map(item => new Date(item.createdAt)))) : null}
                 />
             </MuiPickersUtilsProvider>
 
-            {/* Date picker for updatedAt filter */}
+            {/* // Date picker for updatedAt filter */}
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                     label="Updated At"
                     value={[filters.updatedAt.startDate, filters.updatedAt.endDate]}
                     onChange={handleUpdatedAtChange}
                     format="MM/dd/yyyy"
-                    minDate={new Date(Math.min(...data.map(item => new Date(item.updatedAt))))}
-                    maxDate={new Date(Math.max(...data.map(item => new Date(item.updatedAt))))}
+                    minDate={data ? new Date(Math.min(...data.map(item => new Date(item.updatedAt)))) : null}
+                    maxDate={data ? new Date(Math.max(...data.map(item => new Date(item.updatedAt)))) : null}
                 />
             </MuiPickersUtilsProvider>
 
