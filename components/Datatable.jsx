@@ -11,7 +11,7 @@ import ColumnVisibilityPanel from './ColumnVisibilityPanel';
 import Sorting from './Sorting';
 import jsonData from "../data/data";
 import GroupingPanel from './GroupingPanel';
-import FilterPanel from './FilterPanel';
+// import FilterPanel from './FilterPanel';
 
 
 const DataTable = () => {
@@ -36,10 +36,10 @@ const [groupedHeaders, setGroupedHeaders] = useState([]);
     // const categories = ['Category A', 'Category B', 'Category C'];
     // const subcategories = ['Subcategory 1', 'Subcategory 2', 'Subcategory 3'];
 
-    // const categories = Array.from(new Set(jsonData.map(item => item.category)));
-    // const subcategories = Array.from(new Set(jsonData.map(item => item.subcategory)));
-    const categories = [...new Set(jsonData.map(item => item.category))];
-    const subcategories = [...new Set(jsonData.map(item => item.subcategory))];
+    const categories = Array.from(new Set(jsonData.map(item => item.category)));
+    const subcategories = Array.from(new Set(jsonData.map(item => item.subcategory)));
+    // const categories = [...new Set(jsonData.map(item => item.category))];
+    // const subcategories = [...new Set(jsonData.map(item => item.subcategory))];
 
     
     const getGroupedData = (data, groupedHeaders) => {
@@ -163,7 +163,7 @@ const [groupedHeaders, setGroupedHeaders] = useState([]);
                     <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
                         <VisibilityIcon style={{ marginRight: 10 }} onClick={() => setShowColumnPanel(!showColumnPanel)} />
                         <SwapVertIcon style={{ marginRight: 10 }} onClick={() => setShowSortingPanel(!showSortingPanel)} />
-                        <FilterListIcon onClick={() => setShowFilterPanel(true)} />
+                        <FilterListIcon/>
                         <LayersIcon onClick={() => setShowGroupingPanel(!showGroupingPanel)} />
                     </div>
                 </div>
@@ -204,13 +204,7 @@ const [groupedHeaders, setGroupedHeaders] = useState([]);
                     shape="rounded"
                     variant="outlined"
                 />
-                <FilterPanel
-                    open={showFilterPanel}
-                    onClose={() => setShowFilterPanel(false)}
-                    categories={categories}
-                    subcategories={subcategories}
-                    onApplyFilter={handleApplyFilter}
-                />
+                
             </Paper>
             {showSortingPanel && (
                 <Sorting
